@@ -10,8 +10,8 @@ contract SimpleStorage {
     mapping(string => uint256) public nameToFavoriteNumber;
 
     struct People {
-        uint256 favoriteNumber;
         string name;
+        uint256 favoriteNumber;
     }
 
     People[] public people;
@@ -27,7 +27,7 @@ contract SimpleStorage {
 
     //calldata, memory, storage
     function addPerson(string memory _name, uint256 _favoriteNumber) public {
-        people.push(People(_favoriteNumber, _name));
+        people.push(People(_name, _favoriteNumber));
         nameToFavoriteNumber[_name] = _favoriteNumber;
     }
 }

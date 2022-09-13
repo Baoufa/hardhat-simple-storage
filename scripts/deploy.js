@@ -48,20 +48,20 @@ async function main() {
     const txReceipt = await simpleStorage.deployTransaction.wait();
     loggerReceipt(txReceipt);
 
-    if (network.name !== "hardhat" && process.env.ETHERSCAN_API_KEY) {
+    if (network.name === "goerli" && process.env.ETHERSCAN_API_KEY) {
         console.log(`⌛ - Verifying on Etherscan, please wait...`);
         console.log(``);
         await simpleStorage.deployTransaction.wait(6);
         await verify(txReceipt.contractAddress, []);
     }
 
-    const currentFavoriteNumber = await contract.retrieve();
+    const currentFavoriteNumber = await simpleStorage.retrieve();
     console.log(`Current favorite number: ${currentFavoriteNumber.toString()}`);
 
-    const transactionResponse = await contract.store("7");
+    const transactionResponse = await simpleStorage.store("7");
     await transactionResponse.wait(1);
 
-    const updatedFavoriteNumber = await contract.retrieve();
+    const updatedFavoriteNumber = await simpleStorage.retrieve();
     console.log(`Updated favorite number: ${updatedFavoriteNumber.toString()}`);
 }
 
